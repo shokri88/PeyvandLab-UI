@@ -1,0 +1,4 @@
+/* Pelak matches the existing Peyvand website. Keep its project font license valid. */
+@font-face{font-family:Pelak;src:url('../font/PelakFA-Regular.woff') format('woff');font-weight:100 500;font-style:normal;font-display:swap}
+@font-face{font-family:Pelak;src:url('../font/PelakFA-Bold.woff') format('woff');font-weight:600 900;font-style:normal;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url('../font/Vazirmatn.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
