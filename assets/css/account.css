@@ -44,11 +44,6 @@
 .attachment-placeholder { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border: 1px dashed #bdcfc2; border-radius: 14px; background: #fafcf8; padding: 16px; }
 .attachment-placeholder strong { font-size: 12px; }
 .attachment-placeholder span { font-size: 10px; color: var(--muted); width: 100%; }
-.account-table { min-width: 540px; margin-bottom: 0; }
-.account-table thead { --bs-table-bg: var(--green); }
-.account-table thead th { color: white; font-size: 11px; white-space: nowrap; }
-.account-table td { font-size: 11px; }
-.account-table tfoot { --bs-table-bg: var(--mint); font-weight: 700; }
 .request-timeline { list-style: none; padding: 0; margin: 0; }
 .request-timeline li { position: relative; padding: 0 25px 22px 0; border-inline-start: 1px solid #bdd2c3; margin-inline-start: 6px; }
 .request-timeline li:before { content: ''; position: absolute; inset-inline-start: -5px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
@@ -86,3 +81,18 @@
  .detail-fields dd { font-size: 11px; }
  .account-form-footer > .btn { flex: 1; }
 }
+
+/* Financial records are real cards at every viewport; nothing is clipped or scroll-hidden. */
+.financial-records { display: grid; gap: 12px; min-width: 0; }
+.financial-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: #fafcf9; }
+.financial-card h4 { margin: 0 0 15px; padding-bottom: 12px; border-bottom: 1px solid var(--line); color: var(--deep); font-size: 14px; overflow-wrap: anywhere; }
+.financial-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 15px 20px; margin: 0; min-width: 0; }
+.financial-fields > div { min-width: 0; }
+.financial-fields dt { margin-bottom: 5px; color: var(--muted); font-weight: 500; font-size: 11px; }
+.financial-fields dd { margin: 0; color: var(--ink); font-size: 12px; overflow-wrap: anywhere; }
+.financial-field-wide { grid-column: 1 / -1; }
+.invoice-total { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 18px; margin-top: 12px; padding: 15px 18px; border: 1px solid #d0e3d4; border-radius: 16px; background: var(--mint); color: var(--deep); font-size: 12px; }
+.invoice-total strong { overflow-wrap: anywhere; }
+.financial-empty { padding: 22px 18px; border: 1px dashed #bdcfc2; border-radius: 18px; background: #fafcf9; }
+.financial-empty p { margin: 0; color: var(--muted); font-size: 12px; }
+@media(max-width: 374.98px) { .financial-fields { grid-template-columns: minmax(0,1fr); } .financial-card { padding: 15px; } }
