@@ -1,5 +1,5 @@
 'use strict';
-const CACHE = 'peyvand-ui-v2';
+const CACHE = 'peyvand-ui-v3';
 const CORE = ['./', './index.html', './offline.html', './splash.html', './manifest.webmanifest', './assets/css/app.css', './assets/css/fonts.css', './assets/js/app.js', './assets/css/home-carousels.css', './assets/js/home-carousels.js', './assets/vendor/bootstrap/bootstrap.rtl.min.css', './assets/vendor/bootstrap/bootstrap.bundle.min.js', './assets/images/logo.webp', './assets/images/icons/icon-192.png', './assets/images/icons/icon-512.png', './assets/font/Vazirmatn.woff2', './assets/font/PelakFA-Regular.woff', './assets/font/PelakFA-Bold.woff'];
 const BASE = new URL('./', self.location.href);
 const PAGES = new Set(['','index.html','splash.html','offline.html','about.html','contact.html','services.html','departments.html','department.html','doctors.html','tests.html','preparation.html','faq.html','blog.html','article.html','article-thalassemia.html','article-heart.html','home-sampling.html','child-sampling.html','international.html','partners.html','news.html','careers.html','privacy.html']);
