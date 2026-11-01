@@ -1,0 +1,88 @@
+/* Account prototype: visual data and local session only; no production auth. */
+.account-layout { display: grid; grid-template-columns: 240px minmax(0,1fr); gap: 22px; align-items: start; }
+.account-main { min-width: 0; }
+.account-sidebar { position: sticky; top: 110px; padding: 20px; }
+.account-sidebar h2 { font-size: 19px; margin: 10px 0; }
+.account-links { display: grid; gap: 8px; }
+.account-links a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 13px; font-size: 12px; background: #fff; }
+.account-links a[aria-current="page"] { background: var(--mint); color: var(--green); border-color: #b5d2bf; }
+.account-demo-note { font-size: 11px; }
+.auth-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.8fr); max-width: 920px; gap: 45px; align-items: center; margin: 10px auto; }
+.auth-card { width: 100%; max-width: 470px; padding: 32px; }
+.auth-card h2 { font-size: 23px; margin-top: 10px; }
+.auth-card p { font-size: 12px; }
+.auth-aside { padding: 25px; }
+.auth-aside h2 { font-size: 25px; margin: 20px 0 12px; }
+.auth-aside ul { font-size: 12px; color: var(--muted); padding-inline-start: 20px; line-height: 2.5; }
+.auth-resend { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.otp-input { font-family: Vazirmatn, sans-serif; font-size: 28px; letter-spacing: .6em; text-align: center; padding-left: .6em; min-height: 68px; }
+.account-form-error { color: #a14040; background: #fff3f0; padding: 10px 12px; border-radius: 10px; margin-top: 12px; }
+.account-gate { max-width: 600px; margin: auto; text-align: center; padding: 35px; }
+.account-gate .icon-box { margin: auto auto 18px; }
+.request-card { border: 1px solid var(--line); border-radius: 23px; padding: 20px; background: #fff; position: relative; overflow: hidden; }
+.request-card:before { content: ''; height: 3px; background: linear-gradient(90deg,transparent,var(--green),transparent); position: absolute; inset: 0 20px auto; }
+.request-card-header { padding-bottom: 13px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+.request-card h2 { font-size: 15px; margin: 12px 0 0; line-height: 1.8; }
+.request-status { display: inline-flex; align-items: center; border-radius: 8px; padding: 3px 8px; font-size: 10px; font-weight: 600; }
+.status-pending { color: #24654b; background: #e6f2eb; }
+.status-payment { color: #805817; background: #fff3d9; }
+.status-complete { color: #146049; background: #ddf3eb; }
+.status-cancelled { color: #994840; background: #f9eae7; }
+.request-facts { margin: 0; font-size: 11px; }
+.request-facts > div { display: flex; flex-wrap: wrap; gap: 3px 8px; margin: 8px 0; }
+.request-facts dt { font-weight: 500; color: var(--muted); }
+.request-facts dt:after { content: ':'; }
+.request-facts dd { margin: 0; color: var(--ink); }
+.request-detail-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.request-detail-heading h2 { margin: 8px 0 0; font-size: 19px; }
+.request-status-banner { padding: 14px 16px; border-radius: 14px; margin-bottom: 22px; font-size: 12px; }
+.detail-fields { margin-bottom: 0; }
+.detail-fields dt { color: var(--muted); font-size: 11px; font-weight: 500; margin-bottom: 6px; }
+.detail-fields dd { border-radius: 12px; background: #f5f7f3; padding: 10px 12px; margin: 0; min-height: 44px; font-size: 12px; overflow-wrap: anywhere; }
+.request-detail-section { padding-top: 22px; margin-top: 25px; border-top: 1px solid var(--line); }
+.request-detail-section h3 { font-size: 16px; margin-bottom: 16px; }
+.attachment-placeholder { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border: 1px dashed #bdcfc2; border-radius: 14px; background: #fafcf8; padding: 16px; }
+.attachment-placeholder strong { font-size: 12px; }
+.attachment-placeholder span { font-size: 10px; color: var(--muted); width: 100%; }
+.account-table { min-width: 540px; margin-bottom: 0; }
+.account-table thead { --bs-table-bg: var(--green); }
+.account-table thead th { color: white; font-size: 11px; white-space: nowrap; }
+.account-table td { font-size: 11px; }
+.account-table tfoot { --bs-table-bg: var(--mint); font-weight: 700; }
+.request-timeline { list-style: none; padding: 0; margin: 0; }
+.request-timeline li { position: relative; padding: 0 25px 22px 0; border-inline-start: 1px solid #bdd2c3; margin-inline-start: 6px; }
+.request-timeline li:before { content: ''; position: absolute; inset-inline-start: -5px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+.request-timeline li:last-child { border-color: transparent; padding-bottom: 0; }
+.request-timeline strong { display: block; font-size: 12px; }
+.request-timeline span { display: block; font-size: 10px; color: var(--muted); margin-top: 4px; }
+.account-form-footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; gap: 10px; flex-wrap: wrap; }
+@media(max-width: 991.98px) {
+ .account-layout { grid-template-columns: 200px minmax(0,1fr); gap: 16px; }
+ .account-sidebar { padding: 16px; }
+ .auth-layout { gap: 15px; }
+}
+@media(max-width: 767.98px) {
+ .account-layout { display: flex; flex-direction: column; }
+ .account-sidebar { position: static; width: 100%; padding: 16px; }
+ .account-sidebar .eyebrow, .account-sidebar > .tag { display: none; }
+ .account-sidebar h2 { font-size: 16px; margin-top: 0; }
+ .account-links { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; }
+ .account-links a { font-size: 10px; padding: 10px; }
+ .account-main { width: 100%; }
+ .auth-layout { display: block; }
+ .auth-card { margin: auto; }
+ .auth-aside { text-align: center; padding: 25px 10px; }
+ .auth-aside img { width: 65px; }
+ .auth-aside h2 { font-size: 21px; }
+ .auth-aside ul { display: inline-block; text-align: right; }
+ .request-card { padding: 20px; }
+ .account-gate { padding: 25px 20px; }
+}
+@media(max-width: 575.98px) {
+ .auth-card { padding: 24px 20px; }
+ .auth-card h2 { font-size: 21px; }
+ .auth-resend { flex-wrap: wrap; }
+ .request-detail-heading h2 { font-size: 17px; }
+ .detail-fields dd { font-size: 11px; }
+ .account-form-footer > .btn { flex: 1; }
+}

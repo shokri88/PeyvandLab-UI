@@ -6,7 +6,7 @@ from xml.sax.saxutils import escape
 r=Path(__file__).resolve().parent.parent
 if len(sys.argv)!=2 or urlsplit(sys.argv[1]).scheme!='https' or urlsplit(sys.argv[1]).query or urlsplit(sys.argv[1]).fragment:raise SystemExit('Provide an absolute HTTPS deployment base URL without query/fragment.')
 base=sys.argv[1].rstrip('/')+'/'
-private={'admission.html','results.html','test-detail.html','privacy.html','offline.html','splash.html','result-guide.html','physician-services.html','collaborator-services.html'}
+private={'admission.html','results.html','test-detail.html','privacy.html','offline.html','splash.html','result-guide.html','physician-services.html','collaborator-services.html','login.html','verify.html','history.html','request-details.html','profile.html','logout.html'}
 urls=[]
 for p in r.glob('*.html'):
  s=p.read_text();s=re.sub(r'<link rel="canonical"[^>]*>|<meta property="og:url"[^>]*>|<meta property="og:image"[^>]*>','',s)
