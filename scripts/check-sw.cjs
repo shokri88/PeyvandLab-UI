@@ -15,7 +15,7 @@ vm.runInNewContext(fs.readFileSync(path.join(base,'sw.js'),'utf8'),context);
   let installation;
   listeners.install({waitUntil: promise => installation = promise});
   await installation;
-  for (const url of ['https://result01.labpeyvand.ir/Login','https://example.test/app/results.html','https://example.test/app/admission.html','https://example.test/app/test-detail.html?test=CBC','https://example.test/app/api/result','https://example.test/other/index.html']) {
+  for (const url of ['https://external.example.test/Login','https://example.test/app/results.html','https://example.test/app/admission.html','https://example.test/app/result-guide.html','https://example.test/app/physician-services.html','https://example.test/app/collaborator-services.html','https://example.test/app/test-detail.html?test=CBC','https://example.test/app/api/result','https://example.test/other/index.html']) {
     let handled = false;
     listeners.fetch({request:{url,method:'GET',mode:'navigate'},respondWith:()=>handled=true});
     assert.equal(handled,false,`sensitive request intercepted: ${url}`);

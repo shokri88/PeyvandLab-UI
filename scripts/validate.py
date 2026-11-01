@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 from urllib.parse import urlsplit,unquote
 import json
 ROOT=Path(__file__).resolve().parent.parent
+LEGACY_DOMAINS=('peyvandlab.me','peyvandlab.com','labpeyvand.ir')
 errors=[];count=0
 class Check(HTMLParser):
  def __init__(self,path):super().__init__();self.path=path;self.ids=[];self.refs=[];self.h1=0;self.desc=False;self.lang=False;self.title=False
@@ -15,7 +16,8 @@ class Check(HTMLParser):
   if tag=='title':self.title=True
   if tag=='meta' and d.get('name')=='description':self.desc=bool(d.get('content'))
   if tag=='img' and 'alt' not in d:errors.append(f'{self.path.name}: image without alt')
-  for k in ('src','href'):
+  for k in ('src','href','action','formaction'):
+
    if k in d:self.refs.append(d[k])
   if d.get('data-bs-target'):self.refs.append(d['data-bs-target'])
 for p in ROOT.glob('*.html'):
@@ -25,6 +27,9 @@ for p in ROOT.glob('*.html'):
  if not c.desc or not c.lang or not c.title:errors.append(f'{p.name}: missing SEO/language metadata')
  for ref in c.refs:
   u=urlsplit(ref)
+  host=(u.hostname or '').lower()
+  if any(host==domain or host.endswith('.'+domain) for domain in LEGACY_DOMAINS):
+   errors.append(f'{p.name}: forbidden original-site destination {ref}')
   if u.scheme or u.netloc:continue
   target=(p.parent/unquote(u.path)) if u.path else p
   if not target.exists():errors.append(f'{p.name}: missing {ref}')
@@ -34,4 +39,4 @@ for icon in m['icons']:
  if not (ROOT/icon['src']).exists():errors.append('Manifest icon missing: '+icon['src'])
 if errors:
  print('\n'.join(errors));raise SystemExit(1)
-print(f'PASS: {count} HTML pages; local assets, links, IDs, headings, descriptions, RTL and manifest icons verified.')
+print(f'PASS: {count} HTML pages; local links/assets, metadata, RTL, manifest and no original-site destinations verified.')

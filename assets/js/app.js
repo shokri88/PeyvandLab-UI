@@ -38,7 +38,7 @@
       form.querySelector(':invalid')?.focus(); return;
     }
     const message = document.querySelector('#demo-feedback');
-    message.textContent = `انتخاب شما: ${form.querySelector('#service').value}، ${form.querySelector('#visit-day').value}، ${form.querySelector('#visit-time').value}. این یک پیش‌نمایش است؛ برای ثبت واقعی از سامانه پذیرش استفاده کنید.`;
+    message.textContent = `انتخاب شما: ${form.querySelector('#service').value}، ${form.querySelector('#visit-day').value}، ${form.querySelector('#visit-time').value}. این یک پیش‌نمایش است؛ ثبت نهایی بعد از اتصال سرویس پذیرش فعال می‌شود؛ برای هماهنگی با پذیرش تماس بگیرید.`;
     message.hidden = false;
   });
   let deferredInstall;
