@@ -96,3 +96,28 @@
 .financial-empty { padding: 22px 18px; border: 1px dashed #bdcfc2; border-radius: 18px; background: #fafcf9; }
 .financial-empty p { margin: 0; color: var(--muted); font-size: 12px; }
 @media(max-width: 374.98px) { .financial-fields { grid-template-columns: minmax(0,1fr); } .financial-card { padding: 15px; } }
+/* Request overview and service cards. All record data remains semantic HTML. */
+.request-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.request-overview>div{display:flex;gap:12px;align-items:center;padding:20px 16px;background:#fff;border:1px solid var(--line);border-radius:20px}
+.overview-symbol{display:grid;place-items:center;border-radius:14px;width:44px;height:44px;background:#eaf4ef;color:#176448;font-size:24px;flex-shrink:0}
+.request-overview strong{display:block;font-size:24px;color:var(--deep)}
+.request-overview small{display:block;font-size:11px;color:var(--muted)}
+.request-grid .request-card{display:flex;flex-direction:column;padding:22px;box-shadow:0 6px 24px #133b2610;border-radius:22px}
+.request-grid .request-card:before{display:none}
+.request-grid .request-card-header{display:grid;grid-template-columns:52px 1fr;gap:8px 14px;align-items:center;padding-bottom:20px;margin-bottom:18px}
+.request-service-icon{grid-row:1/3;display:grid;place-items:center;width:52px;height:58px;border-radius:16px;background:#edf6f0;color:#176448}
+.request-service-icon .icon{width:30px;height:30px}
+.request-grid .request-status{justify-self:start;gap:6px;border-radius:20px;padding:5px 10px;font-size:10px}
+.request-grid .request-status:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.request-grid .request-card h2{font-size:15px;margin:0;grid-column:2;line-height:1.8}
+.request-grid .request-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.request-grid .request-facts>div{display:flex;flex-direction:column;gap:5px;margin:0;min-width:0}
+.request-grid .request-facts dt{font-size:10px}
+.request-grid .request-facts dt:after{content:none}
+.request-grid .request-facts dd{font-size:12px;font-weight:600;overflow-wrap:anywhere}
+.request-grid .request-facts>div:first-child{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;background:#f5f8f6;border-radius:10px;padding:10px 12px}
+.request-grid .request-facts>div:first-child dd{font-size:17px;color:#176448}
+.request-next-note{font-size:11px;color:var(--muted);padding-top:14px;border-top:1px dashed var(--line);margin-top:auto;margin-bottom:8px}
+.request-grid .request-card>a{display:flex;align-items:center;justify-content:space-between}
+.request-grid .request-card>a:after{content:'←';font-size:20px}
+@media(max-width:575px){.request-overview{gap:7px}.request-overview>div{padding:14px 8px;flex-direction:column;gap:8px;text-align:center}.overview-symbol{width:32px;height:32px;font-size:20px;border-radius:10px}.request-overview strong{font-size:20px}.request-overview small{font-size:10px}.request-grid .request-card{padding:18px}}

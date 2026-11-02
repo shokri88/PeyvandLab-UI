@@ -41,6 +41,8 @@
     }
     document.querySelectorAll('[data-already-signed-in]').forEach(el => { el.hidden = !active; });
   }
+  const loginDestination = safeNext(new URLSearchParams(location.search).get('next'));
+  document.querySelectorAll('[data-already-signed-in] a').forEach(link => { link.href=loginDestination; link.textContent=loginDestination.startsWith('admission.html') ? 'ادامه پذیرش و انتخاب خدمت' : 'ادامه به حساب کاربری'; });
   renderAccount();
   window.addEventListener('pageshow', renderAccount);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) renderAccount(); });
@@ -60,7 +62,7 @@
       if (!write(keys.otp, {maskedMobile, next, expiresAt: Date.now()+120000, resendAt: Date.now()+60000, attempts: 0})) {
         setMessage(document.querySelector('#login-error'), 'ذخیره نشست مرورگر در دسترس نیست؛ تنظیمات مرورگر را بررسی کنید.'); return;
       }
-      location.assign('verify.html');
+      location.assign('verify.html?next=' + encodeURIComponent(next));
     });
   }
 
@@ -100,7 +102,7 @@
       if (!write(keys.session, {active: true, maskedMobile: otp.maskedMobile, expiresAt: Date.now()+1800000})) {
         setMessage(error,'امکان ایجاد نشست نمایشی وجود ندارد.'); return;
       }
-      const next = safeNext(otp.next); remove(keys.otp); location.assign(next);
+      const next = safeNext(new URLSearchParams(location.search).get('next') || otp.next); remove(keys.otp); location.assign(next);
     });
     resend.addEventListener('click', () => {
       const otp = read(keys.otp); if (!otp || otp.resendAt > Date.now()) return;

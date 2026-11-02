@@ -18,18 +18,22 @@ with sync_playwright() as p:
  page.goto(f'http://127.0.0.1:{server.server_port}/admission.html')
  page.get_by_role('link',name='ورود و ادامه پذیرش',exact=True).click()
  page.locator('#login-mobile').fill('09123456789'); page.locator('#login-form').evaluate('(f)=>f.requestSubmit()')
- page.wait_for_url('**/verify.html'); page.locator('#otp-code').fill('123456'); page.locator('#otp-form').evaluate('(f)=>f.requestSubmit()')
+ page.wait_for_url('**/verify.html?next=admission.html'); page.locator('#otp-code').fill('123456'); page.locator('#otp-form').evaluate('(f)=>f.requestSubmit()')
  page.wait_for_url('**/admission.html')
  page.wait_for_selector('[data-ad-step="1"]:visible')
  page.locator('#ad-next').click(); assert page.locator('#ad-error').is_visible()
  page.locator('input[name="service"][value="home"]').check(); page.locator('#ad-next').click()
  page.locator('#patient-name').fill('بیمار آزمایشی')
  page.locator('#gender').select_option('زن')
- page.locator('#birth-date').fill('۱۴۰۰/۱۲/۳۰')
+ page.locator('#birth-year').select_option('1400'); page.locator('#birth-month').select_option('12')
+ assert page.locator('#birth-day option[value="30"]').count()==0
+ page.locator('#birth-year').select_option('1399')
+ assert page.locator('#birth-day option[value="30"]').count()==1
+ page.locator('#birth-day').select_option('30')
  page.locator('#national-id').fill('۰۰۱۳۵۴۶۷۸۹')
  page.locator('#mobile').fill('۰۹۱۲۳۴۵۶۷۸۹')
- page.locator('#ad-next').click(); assert page.locator('#birth-date').get_attribute('aria-invalid')=='true'
- page.locator('#birth-date').fill('۱۳۷۰/۰۱/۱۵')
+ assert page.locator('#birth-date').input_value()=='1399/12/30'
+ page.locator('#birth-year').select_option('1370'); page.locator('#birth-month').select_option('1'); page.locator('#birth-day').select_option('15')
  page.locator('#ad-next').click(); assert page.locator('#national-id').get_attribute('aria-invalid')=='true'
  page.locator('#foreign-patient').check(); page.locator('#national-id').fill('A1234567')
  page.locator('#city').fill('شیراز'); page.locator('#address').fill('نشانی آزمایشی')
@@ -64,7 +68,31 @@ with sync_playwright() as p:
  page.locator('#ad-restart').click(); page.locator('input[name="service"][value="lab"]').check()
  page.evaluate("sessionStorage.removeItem('peyvand.demoSession')")
  page.locator('#ad-next').click(); assert page.locator('[data-ad-step="0"]').is_visible()
+ # Existing sessions go straight to service selection; a fresh login keeps its explicit return URL.
+ page.goto(f'http://127.0.0.1:{server.server_port}/login.html')
+ page.locator('#login-mobile').fill('09123456789'); page.locator('#login-form').evaluate('(f)=>f.requestSubmit()')
+ page.wait_for_url('**/verify.html?next=history.html')
+ page.locator('#otp-code').fill('123456'); page.locator('#otp-form').evaluate('(f)=>f.requestSubmit()')
+ page.wait_for_url('**/history.html')
+ assert page.locator('[data-history-item]:visible').count()==6
+ page.get_by_role('button',name='در انتظار پرداخت',exact=True).click()
+ assert page.locator('[data-history-item]:visible').count()==1
+ page.get_by_role('button',name='همه',exact=True).click()
+ page.locator('#history-search').fill('۱۰۰۶')
+ assert page.locator('[data-history-item]:visible').count()==1
+ page.locator('#history-search').fill('بدون نتیجه')
+ assert page.locator('[data-history-empty]').is_visible()
+ page.locator('[data-reset-history]').click()
+ assert page.locator('[data-history-item]:visible').count()==6
+ for width in [360,390,768,1440]:
+  page.set_viewport_size({'width':width,'height':900})
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
+ page.screenshot(path='/tmp/history-updated.png',full_page=True)
+ page.goto(f'http://127.0.0.1:{server.server_port}/admission.html')
+ assert page.locator('[data-ad-step="1"]').is_visible()
+ assert page.locator('.ad-notice').evaluate('(el)=>getComputedStyle(el).direction')=='rtl'
+ page.screenshot(path='/tmp/admission-updated.png',full_page=True)
  assert not errors,errors
- print('PASS: login return, required fields, Persian digits, invalid date/ID, home address, file validation, conditional insurance, review/edit, service switch, completion/reset, no patient persistence, expired session, mobile overflow; no browser errors.')
+ print('PASS: login return, required fields, Persian digits, leap-year date options/invalid ID, home address, file validation, conditional insurance, review/edit, service switch, completion/reset, no patient persistence, expired session, mobile overflow; no browser errors.')
  browser.close()
 server.shutdown()

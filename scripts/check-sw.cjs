@@ -8,7 +8,7 @@ const base = path.resolve(__dirname, '..');
 const context = {
   URL, Set, Promise,
   self: { location: { href: 'https://example.test/app/sw.js' }, addEventListener: (name, fn) => listeners[name] = fn, clients: { claim: async () => {} } },
-  caches: { open: async () => ({addAll: async urls => urls.forEach(u => assert.ok(fs.existsSync(path.join(base, u)), `missing core asset ${u}`))}) }
+  caches: { open: async () => ({addAll: async urls => urls.forEach(u => assert.ok(fs.existsSync(path.join(base, u.split('?')[0])), `missing core asset ${u}`))}) }
 };
 vm.runInNewContext(fs.readFileSync(path.join(base,'sw.js'),'utf8'),context);
 (async () => {

@@ -9,6 +9,36 @@
   const fa = number => new Intl.NumberFormat('fa', {useGrouping:false}).format(number);
   const active = () => { try { const s = JSON.parse(sessionStorage.getItem('peyvand.demoSession')); return Boolean(s?.active && s.expiresAt > Date.now()); } catch { return false; } };
   const value = name => form.elements.namedItem(name)?.value?.trim() || '';
+  const birthYear = byId('birth-year'), birthMonth = byId('birth-month'), birthDay = byId('birth-day');
+  const persianParts = date => Object.fromEntries(new Intl.DateTimeFormat('en-US-u-ca-persian', {timeZone:'UTC',year:'numeric',month:'numeric',day:'numeric'}).formatToParts(date).map(p => [p.type, Number(p.value)]));
+  const today = persianParts(new Date());
+  const option = (select, value, label) => select.add(new Option(label, String(value)));
+  for (let y=today.year; y>=today.year-120; y--) option(birthYear,y,fa(y));
+  const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+  const isLeap = year => {
+    for (let day=19; day<=22; day++) {
+      const p = persianParts(new Date(Date.UTC(year+622,2,day)));
+      if (p.year===year && p.month===12 && p.day===30) return true;
+    }
+    return false;
+  };
+  function birthOptions() {
+    const year=Number(birthYear.value), oldMonth=birthMonth.value, oldDay=birthDay.value;
+    birthMonth.length=1;
+    months.forEach((name,i) => { if (!year || year!==today.year || i<today.month) option(birthMonth,i+1,name); });
+    birthMonth.value=oldMonth;
+    const month=Number(birthMonth.value);
+    let days=month<=6?31:month<=11?30:isLeap(year)?30:29;
+    if (year===today.year && month===today.month) days=today.day;
+    birthDay.length=1;
+    if (year && month) for(let d=1;d<=days;d++) option(birthDay,d,fa(d));
+    birthDay.value=oldDay;
+    birthDay.disabled=!year || !month;
+    byId('birth-date').value=year && month && birthDay.value ? `${year}/${String(month).padStart(2,'0')}/${birthDay.value.padStart(2,'0')}` : '';
+  }
+  [birthYear,birthMonth,birthDay].forEach(select => select.addEventListener('change',birthOptions));
+  form.addEventListener('reset',() => setTimeout(birthOptions,0));
+  birthOptions();
   let current = 0;
   function error(message, field) {
     byId('ad-error').textContent = message;
@@ -94,8 +124,8 @@
       }
       if (field.id === 'alternate-phone' && field.value && !/^0\d{10}$/.test(field.value)) field.setCustomValidity('شماره تلفن ۱۱ رقمی با کد شهر وارد کنید.');
       if (field.id.startsWith('prescription-code') && field.value && !/^\d{3,30}$/.test(field.value)) field.setCustomValidity('کد نسخه را با ۳ تا ۳۰ رقم وارد کنید.');
-      if (field.id === 'birth-date') {
-        const parts = field.value.match(/^(1[23]\d{2})\/(\d{1,2})\/(\d{1,2})$/);
+      if (field.id === 'birth-day') {
+        const parts = byId('birth-date').value.match(/^(1[23]\d{2})\/(\d{1,2})\/(\d{1,2})$/);
         let ok = false;
         if (parts) {
           const [,y,m,d] = parts.map(Number);
