@@ -31,16 +31,6 @@
   const allowedTests = ['CBC','Ferritin','FBS','HbA1c','TSH','Vitamin D','Iron','HbA2','Lipid Profile','Urine Culture','Creatinine','AMH'];
   const selected = new URLSearchParams(location.search).get('test');
   if (testTitle && allowedTests.includes(selected)) testTitle.textContent = `راهنمای آزمایش ${selected}`;
-  const form = document.querySelector('#admission-demo');
-  if (form) form.addEventListener('submit', event => {
-    event.preventDefault(); form.classList.add('was-validated');
-    if (!form.checkValidity()) {
-      form.querySelector(':invalid')?.focus(); return;
-    }
-    const message = document.querySelector('#demo-feedback');
-    message.textContent = `انتخاب شما: ${form.querySelector('#service').value}، ${form.querySelector('#visit-day').value}، ${form.querySelector('#visit-time').value}. این یک پیش‌نمایش است؛ ثبت نهایی بعد از اتصال سرویس پذیرش فعال می‌شود؛ برای هماهنگی با پذیرش تماس بگیرید.`;
-    message.hidden = false;
-  });
   let deferredInstall;
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault(); deferredInstall = event;

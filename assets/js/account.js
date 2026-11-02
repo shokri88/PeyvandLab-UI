@@ -16,7 +16,7 @@
     try {
       const url = new URL(value || 'history.html', location.href);
       const name = url.pathname.split('/').pop();
-      if (url.origin === location.origin && ['history.html','profile.html','request-details.html'].includes(name)) return name + url.search;
+      if (url.origin === location.origin && ['history.html','profile.html','request-details.html','admission.html'].includes(name)) return name + url.search;
     } catch { /* Fall back to the local history page. */ }
     return 'history.html';
   };
